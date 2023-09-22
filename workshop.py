@@ -1,19 +1,25 @@
+import string
+
+from googletrans import Translator
+
+
 class Translator_dict:
+    # Инициализация объекта(конструктор)
     def __init__(self, word='program'):
+        # Поля или атрибуты класса
         self.word = word
-        self.russian_dict = {"я": "I", "яблоко": "apple", 'банан': "banana", 'город': 'city', 'человек': 'human'}
-        self.english_dict = {'program': 'программа', 'technology': 'технология', 'innovation': 'инновация',
-                        'super man': 'супермен'}
+        # Экземпляр класса из библиотеки googletrans
+        self.translator = Translator()
 
+    # Метод класса
     def translate_text(self):
-        if self.word in self.english_dict:
-                translate_word = self.english_dict[self.word]
-                return translate_word
-        if self.word in self.russian_dict:
-                translate_word = self.russian_dict[self.word]
-                return translate_word
-        else:
-            return 'No word in the dictionary'
+        if self.word[0].upper() in string.ascii_uppercase:
+            translate_word = self.translator.translate(self.word, dest='ru').text
+            return translate_word
+        elif self.word[0].upper() not in string.ascii_uppercase:
+            translate_word = self.translator.translate(self.word, dest='en').text
+            return translate_word
 
-obj = Translator_dict('яблоко')
+
+obj = Translator_dict('How are you?')
 print(obj.translate_text())
