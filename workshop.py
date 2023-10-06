@@ -1,26 +1,27 @@
-class Person:
-    def __init__(self, name, age, location):
-        self.name = name
-        self.age = age
-        self.location = location
+class Project:
+    def __init__(self, name, description):
+        self.__name = name  # Приватная переменная, доступная только внутри класса
+        self.__description = description  # Приватная переменная, доступная только внутри класса
+        self.__status = "В процессе выполнения"  # Приватная переменная, доступная только внутри класса
 
-    def introduce(self):
-        print(f"Привет, меня зовут {self.name}, мне {self.age} лет, и я живу в {self.location}.")
+    def name(self):
+        return self.__name  # Свойство для получения значения приватной переменной name
 
+    @property
+    def status(self):
+        return self.__status  # Свойство для получения значения приватной переменной status
 
-class Teenager(Person):
-    def __init__(self, name, age, location, school):
-        super().__init__(name, age, location)
-        self.school = school
+    @status.setter
+    def status(self, new_status):
+        if new_status in ["В процессе выполнения", "Завершен"]:
+            self.__status = new_status  # Свойство для установки значения приватной переменной status
 
-    def study(self):
-        print(f"Я учусь в {self.school} и учусь очень старательно!")
+    def __str__(self):
+        return f"Проект: {self.__name}, Статус: {self.__status}"
 
-
-class Adult(Person):
-    def __init__(self, name, age, location, job):
-        super().__init__(name, age, location)
-        self.job = job
-
-    def work(self):
-        print(f"Я работаю {self.job} и стремлюсь стать мидл разработчиком.")
+# Пример использования
+project = Project("Веб-приложение", "Разработка онлайн-платформы")
+print(project.name())  # Выводит: "Веб-приложение"
+print(project.__status)  # Ошибка: AttributeError (приватная переменная недоступна вне класса)
+project.status = "Завершен"
+print(project)  # Выводит: "Проект: Веб-приложение, Статус: Завершен"
